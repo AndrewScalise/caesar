@@ -32,7 +32,7 @@ form = """
                 <input type="text" name="rot" value="0">
                 <p class="error"></p>
             </div>
-            <textarea type="text" name="text"></textarea>
+            <textarea type="text" name="text">%(text)s</textarea>
             <br>
             <input type="submit">
         </form>
@@ -42,7 +42,7 @@ form = """
 
 class Index(webapp2.RequestHandler):
     def get(self):
-        response = form
+        response = (form % {"text":""})
         self.response.write(response)
 
     def post(self):
@@ -50,7 +50,7 @@ class Index(webapp2.RequestHandler):
         rot = self.request.get('rot')
         rot = int(rot)
         rot13 = encrypt(text, rot)
-        response = form + rot13
+        response = (form % {"text": rot13})
         self.response.write(response)
 
 app = webapp2.WSGIApplication([
